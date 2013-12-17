@@ -38,7 +38,7 @@ augroup END
 
 map <leader>n :NERDTreeToggle<CR>
 set grepprg=grep\ -nH\ $*
-filetype plugin indent on
+filetype indent plugin on
 set wildignore=*.o,*~,*.pyc
 
 filetype on " Automatically detect file types.
@@ -56,13 +56,20 @@ set ts=2 " Tabs are 2 spaces
 set bs=2 " Backspace over everything in insert mode
 set shiftwidth=2 " Tabs under smart indent
 set nocp incsearch
-set cinoptions=:0,p0,t0
-set cinwords=if,else,while,do,for,switch,case
-set formatoptions=tcqr
+
 set cindent
+set cinoptions=:0,p0,t0,j1
+set si
+set cinwords=if,else,while,do,for,switch,case
+set cinkeys="0{"
+
+set formatoptions=tcqr
 set autoindent
 set smarttab
 set expandtab
+set smartindent
+
+
 
 " Visual
 set showmatch " Show matching brackets.
@@ -80,7 +87,6 @@ function! HasPaste()
     return ''
 endfunction
 
-filetype indent plugin on
 set hidden
 set wildmenu
 set showcmd
@@ -124,11 +130,30 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \ exe "normal! g`\"" |
      \ endif
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
+
 map <C-l> <C-W>l
+map <C-j> <C-W>j
+map <C-h> <C-W>h
+map <C-k> <C-W>k
 nnoremap <leader>pp diw"0P
 nnoremap <leader>sp diw"0p
 nnoremap <leader>qq :q<cr>
 nnoremap <leader>wq :wq<cr>
+
+
+" java indent macro
+map <leader>m @z
+let @z = 'a {€ku  '
+
+"esc
+set timeout timeoutlen=1000 ttimeoutlen=100
+inoremap jk <c-[>
+
+"fast todo
+map <leader>td o#TODO<Esc>
+map <leader>tD O#TODO<Esc>
+
+"\n insert
+map <leader>j o<ESC>^
+
+map <leader>o :CtrlP<cr>
