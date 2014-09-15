@@ -5,6 +5,14 @@ let mapleader=","
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
+filetype indent plugin on
+" python
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd BufRead *.py set nocindent
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+" /python
+
+
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
@@ -38,7 +46,6 @@ augroup END
 
 map <leader>n :NERDTreeToggle<CR>
 set grepprg=grep\ -nH\ $*
-filetype indent plugin on
 set wildignore=*.o,*~,*.pyc
 
 filetype on " Automatically detect file types.
@@ -105,6 +112,7 @@ set pastetoggle=<F11>
 set tabstop=2
 set magic
 nnoremap <CR> :noh<CR><CR>
+nnoremap <leader>e :edit<CR><CR>
 set t_Co=256
 set background=dark
 colorscheme molokai
@@ -117,6 +125,7 @@ nnoremap j gj
 nnoremap k gk
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nmap <silent> <leader>ss :w<CR>
+nmap <silent> <leader>qq :q<CR>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
@@ -142,8 +151,8 @@ nnoremap <leader>wq :wq<cr>
 
 
 " java indent macro
-map <leader>m @z
-let @z = 'a {€ku  '
+imap <leader>m <c-[>@z
+let @z = 'a{€ku  '
 
 "esc
 set timeout timeoutlen=1000 ttimeoutlen=100
