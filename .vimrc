@@ -6,11 +6,6 @@ let mapleader=","
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
 filetype indent plugin on
-" python
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-autocmd BufRead *.py set nocindent
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-" /python
 
 
 " Remove any trailing whitespace that is in the file
@@ -157,7 +152,7 @@ let @z = 'a{€ku  '
 "esc
 set timeout timeoutlen=1000 ttimeoutlen=100
 inoremap jk <c-[>
-
+inoremap jf <c-[>:w<CR>
 "fast todo
 map <leader>td o#TODO<Esc>
 map <leader>tD O#TODO<Esc>
@@ -166,3 +161,10 @@ map <leader>tD O#TODO<Esc>
 map <leader>j o<ESC>^
 
 map <leader>o :CtrlP<cr>
+
+" python
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd BufRead *.py set nocindent
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
+" /python

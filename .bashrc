@@ -11,12 +11,17 @@ export HISTSIZE=1000000
 export HISTCONTROL=ignoreboth:erasedups
 
 alias vi="vim"
+alias cw="cdl ~/workspace"
+alias cdt="cdl ~/workspace/tenyks"
+alias cdn="cdl ~/workspace/nagios-api"
 alias cdldw="cdl ~/workspace/lumos_data_warehouse"
+alias cdhl="cdl ~/workspace/matt/hire_loft"
 alias cdca="cdl ~/workspace/catapult"
 alias cdcr="cdl ~/workspace/chef-repo"
 alias cdeds="cdl ~/workspace/eventd-server"
 alias cdees="cdl ~/workspace/evente-server"
 alias cdeec="cdl ~/workspace/evente-client"
+alias clks="cdl ~/workspace/LumiKidsServer"
 alias cdlr="cdl ~/workspace/lumos_rails"
 alias cdlu="cdl ~/workspace/lumos_utils"
 alias cdlc="cdl ~/workspace/lumoscalog"
@@ -25,7 +30,8 @@ alias cdor="cdl ~/workspace/matt/outread"
 alias c="cdl"
 alias ctags="`brew --prefix`/bin/ctags"
 
-alias gpo="git push origin"
+alias ncli="/Users/mleung/workspace/nagios-api/ncli"
+
 alias pull="git pull origin"
 alias gb="git branch"
 alias gl="git log"
@@ -43,7 +49,6 @@ alias :q="exit"
 alias :Q="exit"
 
 alias hgrep="history | grep -i --color"
-alias grepp="grep --color -rin"
 alias psgrep="ps aux | grep"
 
 alias be="bundle exec"
@@ -75,6 +80,7 @@ alias ssha29="ssh lumoslabs@app29"
 alias ssha34="ssh lumoslabs@app34"
 alias sshub="ssh 174.37.219.206"
 alias ssmhub="ssh mleung@174.37.219.206"
+alias sstatsd="ssh 8.19.32.151"
 alias tls="tmux list-sessions"
 alias attach="tmux attach -t"
 alias tmuxn="tmux new -s"
@@ -99,7 +105,16 @@ cdl() {
   fi
 }
 greps() {
-  grep --color -rin "$*" *
+  if [ -z "$2" ]
+  then grep --color -rin "$1" *;
+  else grep --color -rin "$1" "$2";
+  fi
+}
+gpo(){
+  if [ "$1" == "master" ] && [ "$2" == "-f" ]
+  then echo "Not force-pushing to master, you buffoon!";
+  else git push origin $*;
+  fi
 }
 
 
