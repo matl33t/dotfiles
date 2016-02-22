@@ -1,11 +1,71 @@
-execute pathogen#infect()
+" ======================== NeoBundle Setup ========================
+ " Note: Skip initialization for vim-tiny or vim-small.
+ if 0 | endif
+
+ if has('vim_starting')
+   if &compatible
+     set nocompatible               " Be iMproved
+   endif
+
+   " Required:
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+ endif
+
+ " Required:
+ call neobundle#begin(expand('~/.vim/bundle/'))
+
+ " Let NeoBundle manage NeoBundle
+ " Required:
+ NeoBundleFetch 'Shougo/neobundle.vim'
+
+ " My Bundles here:
+ " Refer to |:NeoBundle-examples|.
+ " Note: You don't set neobundle setting in .gvimrc!
+ NeoBundle 'wincent/command-t'
+ NeoBundle 'Townk/vim-autoclose'
+ NeoBundle 'vim-scripts/Conque-Shell'
+ NeoBundle 'kien/ctrlp.vim'
+ NeoBundle 'sjl/gundo.vim'
+ NeoBundle 'vim-scripts/matchit.zip'
+ NeoBundle 'scrooloose/nerdcommenter'
+ NeoBundle 'scrooloose/nerdtree'
+ NeoBundle 'garbas/vim-snipmate'
+ NeoBundle 'scrooloose/syntastic'
+ NeoBundle 'godlygeek/tabular'
+ NeoBundle 'tomtom/tlib_vim'
+ NeoBundle 'tony/tmux-config'
+ NeoBundle 'tpope/vim-abolish'
+ NeoBundle 'MarcWeber/vim-addon-mw-utils'
+ NeoBundle 'tpope/vim-cucumber'
+ NeoBundle 'tpope/vim-endwise'
+ NeoBundle 'tpope/vim-fugitive'
+ NeoBundle 'tpope/vim-haml'
+ NeoBundle 'pangloss/vim-javascript'
+ NeoBundle 'plasticboy/vim-markdown'
+ NeoBundle 'tpope/vim-rails'
+ NeoBundle 'tpope/vim-repeat'
+ NeoBundle 'vim-ruby/vim-ruby'
+ NeoBundle 'tpope/vim-surround'
+ NeoBundle 'nelstrom/vim-textobj-rubyblock'
+ NeoBundle 'kana/vim-textobj-user'
+ NeoBundle 'tomasr/molokai'
+
+ call neobundle#end()
+
+ " Required:
+ filetype plugin indent on
+
+ " If there are uninstalled bundles found on startup,
+ " this will conveniently prompt you to install them.
+ NeoBundleCheck
+
+" ======================== Configs  ========================
+
 let mapleader=","
 "{{{Auto Commands
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
-
-filetype indent plugin on
 
 
 " Remove any trailing whitespace that is in the file
@@ -139,15 +199,12 @@ map <C-l> <C-W>l
 map <C-j> <C-W>j
 map <C-h> <C-W>h
 map <C-k> <C-W>k
+map <leader>. <C-W>=
 nnoremap <leader>pp diw"0P
 nnoremap <leader>sp diw"0p
 nnoremap <leader>qq :q<cr>
 nnoremap <leader>wq :wq<cr>
-
-
-" java indent macro
-imap <leader>m <c-[>@z
-let @z = 'a{€ku  '
+nnoremap <leader>m :call MaximizeToggle()<CR>
 
 "esc
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -168,3 +225,32 @@ autocmd BufRead *.py set nocindent
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 " /python
+
+
+
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    only
+  endif
+endfunction
+
+" auto paste mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction

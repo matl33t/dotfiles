@@ -1,4 +1,2 @@
-vimfiles
+dotfiles
 ========
-
-My vimrc and plugins.
