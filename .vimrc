@@ -1,5 +1,6 @@
 " ======================== NeoBundle Setup ========================
- " Note: Skip initialization for vim-tiny or vim-small.
+" Follow initial installation instructions: https://github.com/Shougo/neobundle.vim
+" Note: Skip initialization for vim-tiny or vim-small.
  if 0 | endif
 
  if has('vim_starting')
