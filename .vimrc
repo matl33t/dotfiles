@@ -1,6 +1,5 @@
 " ======================== NeoBundle Setup ========================
-" Follow initial installation instructions: https://github.com/Shougo/neobundle.vim
-" Note: Skip initialization for vim-tiny or vim-small.
+ " Note: Skip initialization for vim-tiny or vim-small.
  if 0 | endif
 
  if has('vim_starting')
@@ -49,7 +48,9 @@
  NeoBundle 'tpope/vim-surround'
  NeoBundle 'nelstrom/vim-textobj-rubyblock'
  NeoBundle 'kana/vim-textobj-user'
- NeoBundle 'tomasr/molokai'
+ NeoBundle 'kchmck/vim-coffee-script'
+ NeoBundle 'vimwiki/vimwiki'
+ NeoBundle 'mattn/calendar-vim'
 
  call neobundle#end()
 
@@ -185,7 +186,7 @@ nmap <silent> <leader>qq :q<CR>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+map <leader>tm :tabedit %<CR>
 map <C-s> :w<cr>
 set guioptions=aem
 if has ('gui_running')
@@ -205,7 +206,13 @@ nnoremap <leader>pp diw"0P
 nnoremap <leader>sp diw"0p
 nnoremap <leader>qq :q<cr>
 nnoremap <leader>wq :wq<cr>
-nnoremap <leader>m :call MaximizeToggle()<CR>
+
+
+
+
+" java indent macro
+"imap <leader>m <c-[>@z
+"let @z = 'a{€ku  '
 
 "esc
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -229,22 +236,6 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
 
 
-function! MaximizeToggle()
-  if exists("s:maximize_session")
-    exec "source " . s:maximize_session
-    call delete(s:maximize_session)
-    unlet s:maximize_session
-    let &hidden=s:maximize_hidden_save
-    unlet s:maximize_hidden_save
-  else
-    let s:maximize_hidden_save = &hidden
-    let s:maximize_session = tempname()
-    set hidden
-    exec "mksession! " . s:maximize_session
-    only
-  endif
-endfunction
-
 " auto paste mode
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
@@ -255,3 +246,21 @@ function! XTermPasteBegin()
   set paste
   return ""
 endfunction
+
+au BufRead,BufNewFile *.wiki set filetype=vimwiki
+:autocmd FileType vimwiki map <leader>d :VimwikiMakeDiaryNote<cr>
+:autocmd FileType vimwiki map <leader>g :VimwikiDiaryGenerateLinks<cr>
+function! ToggleCalendar()
+  execute ":Calendar"
+  if exists("g:calendar_open")
+    if g:calendar_open == 1
+      execute "q"
+      unlet g:calendar_open
+    else
+      g:calendar_open = 1
+    end
+  else
+    let g:calendar_open = 1
+  end
+endfunction
+:autocmd FileType vimwiki map <leader>c :call ToggleCalendar()<cr>
