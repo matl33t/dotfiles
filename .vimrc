@@ -1,65 +1,78 @@
 " ======================== NeoBundle Setup ========================
- " Note: Skip initialization for vim-tiny or vim-small.
- if 0 | endif
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
 
- if has('vim_starting')
-   if &compatible
-     set nocompatible               " Be iMproved
-   endif
-
-   " Required:
-   set runtimepath+=~/.vim/bundle/neobundle.vim/
+if has('vim_starting')
+ if &compatible
+   set nocompatible               " Be iMproved
  endif
 
  " Required:
- call neobundle#begin(expand('~/.vim/bundle/'))
+ set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
- " Let NeoBundle manage NeoBundle
- " Required:
- NeoBundleFetch 'Shougo/neobundle.vim'
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
 
- " My Bundles here:
- " Refer to |:NeoBundle-examples|.
- " Note: You don't set neobundle setting in .gvimrc!
- NeoBundle 'wincent/command-t'
- NeoBundle 'Townk/vim-autoclose'
- NeoBundle 'vim-scripts/Conque-Shell'
- NeoBundle 'kien/ctrlp.vim'
- NeoBundle 'sjl/gundo.vim'
- NeoBundle 'vim-scripts/matchit.zip'
- NeoBundle 'scrooloose/nerdcommenter'
- NeoBundle 'scrooloose/nerdtree'
- NeoBundle 'garbas/vim-snipmate'
- NeoBundle 'scrooloose/syntastic'
- NeoBundle 'godlygeek/tabular'
- NeoBundle 'tomtom/tlib_vim'
- NeoBundle 'tony/tmux-config'
- NeoBundle 'tpope/vim-abolish'
- NeoBundle 'MarcWeber/vim-addon-mw-utils'
- NeoBundle 'tpope/vim-cucumber'
- NeoBundle 'tpope/vim-endwise'
- NeoBundle 'tpope/vim-fugitive'
- NeoBundle 'tpope/vim-haml'
- NeoBundle 'pangloss/vim-javascript'
- NeoBundle 'plasticboy/vim-markdown'
- NeoBundle 'tpope/vim-rails'
- NeoBundle 'tpope/vim-repeat'
- NeoBundle 'vim-ruby/vim-ruby'
- NeoBundle 'tpope/vim-surround'
- NeoBundle 'nelstrom/vim-textobj-rubyblock'
- NeoBundle 'kana/vim-textobj-user'
- NeoBundle 'kchmck/vim-coffee-script'
- NeoBundle 'vimwiki/vimwiki'
- NeoBundle 'mattn/calendar-vim'
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
 
- call neobundle#end()
+" This plugin for Vim enable an auto-close chars feature for you. For instance if you type an '(', ``autoclose`` will automatically insert a ')' and put the cursor between than.
+NeoBundle 'Townk/vim-autoclose'
 
- " Required:
- filetype plugin indent on
+" Conque is a Vim plugin which allows you to run interactive programs, such as bash on linux or powershell.exe on Windows, inside a Vim buffer. In other words it is a terminal emulator which uses a Vim buffer to display the program output.
+NeoBundle 'vim-scripts/Conque-Shell'
 
- " If there are uninstalled bundles found on startup,
- " this will conveniently prompt you to install them.
- NeoBundleCheck
+" Fuzzy finder navigation
+NeoBundle 'kien/ctrlp.vim'
+
+" Visualize vim undo tree
+NeoBundle 'sjl/gundo.vim'
+
+" The matchit.vim script allows you to configure % to match more than just single characters.  You can match words and even regular expressions.
+NeoBundle 'tmhedberg/matchit'
+
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'garbas/vim-snipmate'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'tony/tmux-config'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'tpope/vim-rails'
+
+" repeat.vim: enable repeating supported plugin maps with \"."
+" silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'vimwiki/vimwiki'
+NeoBundle 'mattn/calendar-vim'
+NeoBundle 'vim-scripts/regreplop.vim'
+" NeoBundle 'chrisbra/NrrwRgn'
+" requires ctags
+NeoBundle 'majutsushi/tagbar'
+
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
 
 " ======================== Configs  ========================
 
@@ -180,14 +193,11 @@ set nowb
 set noswapfile
 nnoremap j gj
 nnoremap k gk
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-nmap <silent> <leader>ss :w<CR>
-nmap <silent> <leader>qq :q<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabedit %<CR>
-map <C-s> :w<cr>
+map <leader>tm :tabedit %<cr>
 set guioptions=aem
 if has ('gui_running')
   set guifont=Meslo\ LG\ M\ DZ\ Regular:h12
@@ -205,19 +215,19 @@ map <leader>. <C-W>=
 nnoremap <leader>pp diw"0P
 nnoremap <leader>sp diw"0p
 nnoremap <leader>qq :q<cr>
+nnoremap <leader>ss :w<cr>
 nnoremap <leader>wq :wq<cr>
 
+nmap <silent> <C-P> <Plug>ReplaceMotion
+nmap <silent> <C-P><C-P> <Plug>ReplaceLine
+vmap <silent> <C-P> <Plug>ReplaceVisual
 
-
-
-" java indent macro
-"imap <leader>m <c-[>@z
-"let @z = 'a{€ku  '
 
 "esc
 set timeout timeoutlen=1000 ttimeoutlen=100
 inoremap jk <c-[>
-inoremap jf <c-[>:w<CR>
+inoremap jf <c-[>:w<cr>
+
 "fast todo
 map <leader>td o#TODO<Esc>
 map <leader>tD O#TODO<Esc>
@@ -225,7 +235,9 @@ map <leader>tD O#TODO<Esc>
 "\n insert
 map <leader>j o<ESC>^
 
-map <leader>o :CtrlP<cr>
+"map <leader>o :CtrlP<cr>
+let g:ctrlp_map = '<leader>o'
+map <leader>tb :TagbarToggle<cr>
 
 " python
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
